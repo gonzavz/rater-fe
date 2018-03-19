@@ -8,12 +8,13 @@ import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-client-preset'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import localSession from './vendor/localSession'
 
 const httpLink = new HttpLink({ uri: 'http://localhost:4000/graphql' })
 
 const middlewareAuthLink = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem('token')
-  const authorizationHeader = token ? `Bearer ${token}` : null
+  const token = localSession.get()
+  const authorizationHeader = token ? `${token}` : null
   operation.setContext({
     headers: {
       authorization: authorizationHeader
