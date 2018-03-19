@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Alert } from 'antd';
 const FormItem = Form.Item;
 
 class AuthForm extends Component {
@@ -11,11 +11,12 @@ class AuthForm extends Component {
       }
     });
   }
-
+  
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.onSubmit.bind(this)} className="login-form">
+        {this.props.errors.map((error, index) => <Alert message={error} type="error" key={index} />)}
         <FormItem>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
