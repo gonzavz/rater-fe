@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, Button, Icon, Row, Col} from 'antd';
-import mutation from '../../mutations/Login';
+import mutation from '../../mutations/Register';
 import { withRouter } from 'react-router';
 import { graphql } from 'react-apollo';
 import { compose } from 'react-apollo'
@@ -16,24 +15,26 @@ class LoginForm extends Component {
 
   onSubmit({username, password}) {
     const variables = {username, password};
-    this.props.login({variables})
-      .then(({data}) => localSession.set(data.login.token))
+    this.props.register({variables})
+      .then(({data}) => localSession.set(data.register.token))
       .then(() => this.props.sessionQuery.refetch())
       .then(() => this.props.history.push('/'))
       .catch ((error) => {
-        const errors = error.graphQLErrors.map(e => e.message);
-        this.setState({ errors })
+        if (error.graphQLErrors) {
+          const errors = error.graphQLErrors.map(e => e.message);
+          this.setState({ errors })
+        }
       });
   }
 
   render() {
     return (
-      <AuthForm errors={this.state.errors} action="login" onSubmit={this.onSubmit.bind(this)} />
+      <AuthForm errors={this.state.errors} action="register" actionLabel="Register" onSubmit={this.onSubmit.bind(this)} />
     );
   }
 }
   
 export default compose(
   graphql(query, { name: 'sessionQuery' }),
-  graphql(mutation, { name: 'login' }),
+  graphql(mutation, { name: 'register' }),
 )(withRouter(LoginForm));

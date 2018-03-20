@@ -30,7 +30,15 @@ class Header extends Component {
             </Row>
     } else {
       return <Row type="flex" gutter={16}>
-              <Button type="primary" shape="circle" icon="usergroup-add" size="large" />
+              <Button
+                type="primary"
+                shape="circle"
+                icon="usergroup-add"
+                size="large"
+                onClick={() => {
+                  this.props.history.push(`/register`)
+                }}
+              />
               <Button
                 type="primary"
                 shape="circle"

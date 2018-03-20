@@ -1,5 +1,10 @@
 @import '~antd/dist/antd.css';
 
+.full-screen {
+  min-height: 20rem;
+  height: 100vh;
+}
+
 .App {
   text-align: center;
 }
