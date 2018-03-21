@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Layout, Button, Icon, Row, Col} from 'antd';
+import { Layout, Menu, Button, Icon, Row, Col } from 'antd';
 import { withRouter } from 'react-router';
-import {graphql} from 'react-apollo';
+import { graphql } from 'react-apollo';
 import query from '../queries/SessionQuery';
 import localSession from '../vendor/localSession';
 
@@ -14,56 +14,47 @@ class Header extends Component {
   }
 
   renderButtons() {
-    const {loading, session} = this.props.data;
-    if(loading) {
+    const { loading, session } = this.props.data;
+    if (loading) {
       return <div>Loading ...</div>;
     }
-    if(session){
-      return <Row type="flex" gutter={16}>
-              <Button
-                type="primary"
-                shape="circle"
-                icon="logout"
-                size="large"
-                onClick={() => this.logOut()}
-              />
-            </Row>
-    } else {
-      return <Row type="flex" gutter={16}>
-              <Button
-                type="primary"
-                shape="circle"
-                icon="usergroup-add"
-                size="large"
-                onClick={() => {
-                  this.props.history.push(`/register`)
-                }}
-              />
-              <Button
-                type="primary"
-                shape="circle"
-                icon="login"
-                size="large"
-                onClick={() => {
-                  this.props.history.push(`/login`)
-                }}
-              />
-            </Row> 
+    if (session) {
+      return (<Row type="flex" gutter={16}>
+        <Button
+          type="danger"
+          shape="circle"
+          icon="logout"
+          size="large"
+          onClick={() => this.logOut()}
+        />
+              </Row>);
     }
+    return (<Row type="flex" gutter={16}>
+      <Button
+        type="primary"
+        shape="circle"
+        icon="login"
+        size="large"
+        onClick={() => {
+                  this.props.history.push('/login');
+                }}
+      />
+    </Row>);
   }
-  
+
   render() {
-      return (
-        <AntHeader>
-          <Row type="flex" justify="space-around">
-            <Col span={4}>Rater Icon CS</Col>
-            <Col span={4}>
-              { this.renderButtons() }
-            </Col>
-          </Row>
-        </AntHeader>
-      );
-    }
+    return (
+      <AntHeader>
+        <div className="logo" />
+        <Row type="flex" justify="space-around">
+          <Col span={4}>Rater Icon CS</Col>
+          <Col span={4}>
+            { this.renderButtons() }
+          </Col>
+        </Row>
+      </AntHeader>
+    );
   }
-  
+}
+
 export default graphql(query)(withRouter(Header));

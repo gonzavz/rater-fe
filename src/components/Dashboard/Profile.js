@@ -29,7 +29,7 @@ class Profile extends Component {
     const { editingName } = this.state;
     const { sessionQuery } = this.props;
     if (sessionQuery.loading) { return (<div>Loading ...</div>)}
-    const {person} = sessionQuery.session;
+    const { person } = sessionQuery.session;
     const fields = {
       name: {
         value: person.name
@@ -40,12 +40,9 @@ class Profile extends Component {
     };
     return (
       <Row>
-        <Col span={20}>
+        <Col span={10}>
           <PersonForm {...fields} onSubmit={this.onSubmit.bind(this)} />
         </Col>
-        <pre className="language-bash">
-          {JSON.stringify(fields, null, 2)}
-        </pre>
       </Row>
     );
   }
